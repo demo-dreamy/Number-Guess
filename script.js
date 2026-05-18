@@ -1,54 +1,100 @@
 let numbers = [];
 
-for (let i = 1; i <= 100; i++) {
+for(let i = 1; i <= 1000; i++){
 
     numbers.push(i);
 }
 
 let possibleNumbers = [...numbers];
 
-let currentFunction;
-
-const questionText = document.getElementById("question");
-
-const doneButton = document.getElementById("doneButton");
-
-const yesButton = document.getElementById("yesButton");
-
-const noButton = document.getElementById("noButton");
-
-const playAgainButton = document.getElementById("playAgainButton");
-
-const madeBy = document.getElementById("madeBy");
+let currentFunction = null;
 
 
-// QUESTION FUNCTIONS
 
-function isDivBy2(n) {
+function numberToWords(n){
+
+    const ones = [
+        "", "one", "two", "three", "four",
+        "five", "six", "seven", "eight", "nine"
+    ];
+
+    const teens = [
+        "ten", "eleven", "twelve", "thirteen",
+        "fourteen", "fifteen", "sixteen",
+        "seventeen", "eighteen", "nineteen"
+    ];
+
+    const tens = [
+        "", "", "twenty", "thirty", "forty",
+        "fifty", "sixty", "seventy",
+        "eighty", "ninety"
+    ];
+
+    if(n < 10){
+
+        return ones[n];
+    }
+
+    if(n < 20){
+
+        return teens[n - 10];
+    }
+
+    if(n < 100){
+
+        let t = Math.floor(n / 10);
+        let o = n % 10;
+
+        return tens[t] + (o ? "-" + ones[o] : "");
+    }
+
+    if(n < 1000){
+
+        let h = Math.floor(n / 100);
+        let remainder = n % 100;
+
+        return ones[h] + " hundred " +
+        (remainder ? numberToWords(remainder) : "");
+    }
+
+    if(n === 1000){
+
+        return "one thousand";
+    }
+}
+
+
+
+function is_div_by_2(n){
 
     return n % 2 === 0;
 }
 
-function isDivBy3(n) {
+function is_div_by_3(n){
 
     return n % 3 === 0;
 }
 
-function isDivBy5(n) {
+function is_div_by_5(n){
 
     return n % 5 === 0;
 }
 
-function isPrime(n) {
+function is_div_by_7(n){
 
-    if (n < 2) {
+    return n % 7 === 0;
+}
+
+function is_prime(n){
+
+    if(n < 2){
 
         return false;
     }
 
-    for (let i = 2; i < n; i++) {
+    for(let i = 2; i < n; i++){
 
-        if (n % i === 0) {
+        if(n % i === 0){
 
             return false;
         }
@@ -57,302 +103,373 @@ function isPrime(n) {
     return true;
 }
 
-function isGreaterThan50(n) {
+function is_greater_than_50(n){
 
     return n > 50;
 }
 
-function isPerfectSquare(n) {
+function is_perfect_square(n){
 
-    let squareRoot = Math.floor(Math.sqrt(n));
+    let root = Math.floor(Math.sqrt(n));
 
-    return squareRoot * squareRoot === n;
+    return root * root === n;
 }
 
-function hasTwoDigits(n) {
+function has_two_digits(n){
 
-    return String(n).length === 2;
+    return n.toString().length === 2;
 }
 
-function isDigitSumEven(n) {
+function is_digit_sum_even(n){
 
-    let digitSum = String(n)
-        .split("")
-        .reduce((sum, digit) => sum + Number(digit), 0);
+    let sum = n.toString()
+    .split("")
+    .reduce((a,b)=>a + Number(b),0);
 
-    return digitSum % 2 === 0;
+    return sum % 2 === 0;
 }
 
-function isReverseBigger(n) {
+function is_reverse_bigger(n){
 
-    let reversedNumber = Number(
-        String(n).split("").reverse().join("")
-    );
+    let reversed =
+    Number(n.toString().split("").reverse().join(""));
 
-    return reversedNumber > n;
+    return reversed > n;
 }
 
-function hasRepeatedDigits(n) {
+function has_repeated_digits(n){
 
-    let digits = String(n);
+    let digits = n.toString();
 
     return new Set(digits).size !== digits.length;
 }
 
-function isGreaterThan75(n) {
+function is_greater_than_75(n){
 
     return n > 75;
 }
 
-function isLessThan25(n) {
+function is_lesser_than_25(n){
 
     return n < 25;
 }
 
-function startsWithT(n) {
+function starts_with_t(n){
+
+    return numberToWords(n).startsWith("t");
+}
+
+function starts_with_f(n){
+
+    return numberToWords(n).startsWith("f");
+}
+
+function starts_with_s(n){
+
+    return numberToWords(n).startsWith("s");
+}
+
+function ends_with_vowel(n){
 
     let word = numberToWords(n);
 
-    return word.startsWith("t");
+    let last = word[word.length - 1];
+
+    return "aeiou".includes(last);
 }
 
-function startsWithF(n) {
+function ones_digit_multiple_of_3(n){
 
-    let word = numberToWords(n);
+    let digit = n % 10;
 
-    return word.startsWith("f");
+    return digit % 3 === 0;
 }
 
-function startsWithS(n) {
+function tens_digit_multiple_of_5(n){
 
-    let word = numberToWords(n);
+    let digit = Math.floor(n / 10) % 10;
 
-    return word.startsWith("s");
+    return digit % 5 === 0;
 }
 
-function endsWithVowel(n) {
+function hundreds_digit_multiple_of_2(n){
 
-    let word = numberToWords(n);
+    let digit = Math.floor(n / 100) % 10;
 
-    let lastLetter = word[word.length - 1];
-
-    return "aeiou".includes(lastLetter);
+    return digit % 2 === 0;
 }
 
-function onesDigitMultipleOf3(n) {
+function is_digit_sum_prime(n){
 
-    let onesDigit = n % 10;
+    let sum = n.toString()
+    .split("")
+    .reduce((a,b)=>a + Number(b),0);
 
-    return onesDigit % 3 === 0;
+    return is_prime(sum);
 }
 
+function is_greater_than_500(n){
 
-// SIMPLE NUMBER WORDS
+    return n > 500;
+}
 
-function numberToWords(n) {
+function is_greater_than_700(n){
 
-    const ones = [
+    return n > 700;
+}
 
-        "",
+function is_lesser_than_200(n){
 
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine"
-    ];
+    return n < 200;
+}
 
-    const teens = [
+function has_three_digits(n){
 
-        "ten",
-        "eleven",
-        "twelve",
-        "thirteen",
-        "fourteen",
-        "fifteen",
-        "sixteen",
-        "seventeen",
-        "eighteen",
-        "nineteen"
-    ];
+    return n.toString().length === 3;
+}
 
-    const tens = [
+function is_greater_than_900(n){
 
-        "",
-        "",
-        "twenty",
-        "thirty",
-        "forty",
-        "fifty",
-        "sixty",
-        "seventy",
-        "eighty",
-        "ninety"
-    ];
+    return n > 900;
+}
 
-    if (n < 10) {
+function is_ones_digit_greater(n){
 
-        return ones[n];
+    if(n < 10){
+
+        return false;
     }
 
-    if (n < 20) {
+    let ones = n % 10;
 
-        return teens[n - 10];
+    let tens = Math.floor(n / 10) % 10;
+
+    return ones > tens;
+}
+
+function is_tens_digit_lesser(n){
+
+    if(n < 100){
+
+        return false;
     }
 
-    if (n < 100) {
+    let tens = Math.floor(n / 10) % 10;
 
-        let tenDigit = Math.floor(n / 10);
+    let hundreds = Math.floor(n / 100) % 10;
 
-        let oneDigit = n % 10;
+    return tens < hundreds;
+}
 
-        if (oneDigit === 0) {
+function is_hundreds_digit_greater(n){
 
-            return tens[tenDigit];
+    if(n < 100){
+
+        return false;
+    }
+
+    let hundreds = Math.floor(n / 100) % 10;
+
+    let ones = n % 10;
+
+    return hundreds > ones;
+}
+
+function has_prime_digits(n){
+
+    let primeDigits = [2,3,5,7];
+
+    for(let digit of n.toString()){
+
+        if(primeDigits.includes(Number(digit))){
+
+            return true;
         }
-
-        return tens[tenDigit] + "-" + ones[oneDigit];
     }
 
-    if (n === 100) {
-
-        return "one hundred";
-    }
+    return false;
 }
 
-// QUESTIONS
 
-const questions = [
 
-    ["Is it divisible by 2?", isDivBy2],
-    ["Is it divisible by 3?", isDivBy3],
-    ["Is it divisible by 5?", isDivBy5],
-    ["Is it greater than 50?", isGreaterThan50],
-    ["Is it a prime number?", isPrime],
-    ["Is it a perfect square?", isPerfectSquare],
-    ["Does your number have two digits?", hasTwoDigits],
-    ["Is the sum of its digits even?", isDigitSumEven],
-    ["Is the reverse of the number bigger?", isReverseBigger],
-    ["Are the digits repeated?", hasRepeatedDigits],
-    ["Is it greater than 75?", isGreaterThan75],
-    ["Is it less than 25?", isLessThan25],
-    ["Does your number start with the letter 't'?", startsWithT],
-    ["Does your number start with the letter 'f'?", startsWithF],
-    ["Does your number start with the letter 's'?", startsWithS],
-    ["Does your number end with a vowel?", endsWithVowel],
-    ["Is the ones digit a multiple of 3?", onesDigitMultipleOf3]
+let questions = [
+
+["Is it a multiple of 2?", is_div_by_2],
+
+["Is it divisible by 3?", is_div_by_3],
+
+["Is it greater than 50?", is_greater_than_50],
+
+["Is it a prime number?", is_prime],
+
+["Is it a perfect square?", is_perfect_square],
+
+["Does your number have two digits?", has_two_digits],
+
+["Is the sum of its digits even?", is_digit_sum_even],
+
+["Is the reverse of the number bigger?", is_reverse_bigger],
+
+["Are the digits repeated?", has_repeated_digits],
+
+["Is it greater than 75?", is_greater_than_75],
+
+["Is it less than 25?", is_lesser_than_25],
+
+["Does your number start with the letter 't'?", starts_with_t],
+
+["Does your number start with the letter 'f'?", starts_with_f],
+
+["Does your number start with the letter 's'?", starts_with_s],
+
+["Does your number end with a vowel?", ends_with_vowel],
+
+["Is the ones digit a multiple of 3?", ones_digit_multiple_of_3],
+
+["Is it a multiple of 5?", is_div_by_5],
+
+["Is the sum of the digits a prime number?", is_digit_sum_prime],
+
+["Is it greater than 500?", is_greater_than_500],
+
+["Is it greater than 700?", is_greater_than_700],
+
+["Is it lesser than 200?", is_lesser_than_200],
+
+["Does your number have 3 digits?", has_three_digits],
+
+["Is it greater than 900?", is_greater_than_900],
+
+["Is the ones digit greater than the tens digit?", is_ones_digit_greater],
+
+["Is the tens digit lesser than the hunderds digit?", is_tens_digit_lesser],
+
+["Is the hundreds digit greater than the ones digit?", is_hundreds_digit_greater],
+
+["Is it divisible by 7?", is_div_by_7],
+
+["Are any of the digits prime numbers?", has_prime_digits],
+
+["Is the tens digit a multiple of 5?", tens_digit_multiple_of_5],
+
+["Is the hundreds digit a multiple of 2?", hundreds_digit_multiple_of_2]
+
 ];
 
 
-// GAME LOGIC
 
-function askNextQuestion() {
+function askNextQuestion(){
 
     let remainingQuestions = [];
 
-    for (let question of questions) {
+    for(let question of questions){
 
-        let questionFunction = question[1];
+        let func = question[1];
 
-        let yesGroup = possibleNumbers.filter(x => questionFunction(x));
+        let yesGroup =
+        possibleNumbers.filter(x => func(x));
 
-        let noGroup = possibleNumbers.filter(x => !questionFunction(x));
+        let noGroup =
+        possibleNumbers.filter(x => !func(x));
 
-        if (yesGroup.length > 0 && noGroup.length > 0) {
+        if(yesGroup.length > 0 &&
+           noGroup.length > 0){
 
             remainingQuestions.push(question);
         }
     }
 
-    let question = remainingQuestions[
-        Math.floor(Math.random() * remainingQuestions.length)
+    let randomQuestion =
+    remainingQuestions[
+        Math.floor(Math.random()
+        * remainingQuestions.length)
     ];
 
-    questionText.innerText = question[0];
+    document.getElementById("question")
+    .innerText = randomQuestion[0];
 
-    currentFunction = question[1];
+    currentFunction = randomQuestion[1];
 }
 
-function checkGameStatus() {
 
-    if (possibleNumbers.length === 1) {
 
-        questionText.innerText =
-            "Your number is: " + possibleNumbers[0];
+function yesAnswer(){
 
-        yesButton.style.display = "none";
+    possibleNumbers =
+    possibleNumbers.filter(x =>
+    currentFunction(x));
 
-        noButton.style.display = "none";
+    checkGameStatus();
+}
 
-        playAgainButton.style.display = "inline-block";
 
-        madeBy.style.display = "block";
+
+function noAnswer(){
+
+    possibleNumbers =
+    possibleNumbers.filter(x =>
+    !currentFunction(x));
+
+    checkGameStatus();
+}
+
+
+
+function checkGameStatus(){
+
+    if(possibleNumbers.length === 1){
+
+        document.getElementById("question")
+        .innerText =
+        "Your number is: " + possibleNumbers[0];
+
+        document.getElementById("gameButtons")
+        .style.display = "none";
+
+        document.getElementById("playAgainButton")
+        .style.display = "inline-block";
     }
 
-    else {
+    else{
 
         askNextQuestion();
     }
 }
 
-function yesAnswer() {
 
-    possibleNumbers = possibleNumbers.filter(x =>
-        currentFunction(x)
-    );
 
-    checkGameStatus();
-}
+function startGame(){
 
-function noAnswer() {
+    document.getElementById("startButton")
+    .style.display = "none";
 
-    possibleNumbers = possibleNumbers.filter(x =>
-        !currentFunction(x)
-    );
-
-    checkGameStatus();
-}
-
-function startGame() {
-
-    doneButton.style.display = "none";
-
-    yesButton.style.display = "inline-block";
-
-    noButton.style.display = "inline-block";
+    document.getElementById("gameButtons")
+    .style.display = "block";
 
     askNextQuestion();
 }
 
-function resetGame() {
+
+
+function resetGame(){
 
     possibleNumbers = [...numbers];
 
-    questionText.innerText =
-        "Think of a number between 1 and 100";
+    document.getElementById("question")
+    .innerText =
+    "Think of a number between 1 and 1000";
 
-    doneButton.style.display = "inline-block";
+    document.getElementById("startButton")
+    .style.display = "inline-block";
 
-    yesButton.style.display = "none";
+    document.getElementById("gameButtons")
+    .style.display = "none";
 
-    noButton.style.display = "none";
-
-    playAgainButton.style.display = "none";
-
-    madeBy.style.display = "none";
+    document.getElementById("playAgainButton")
+    .style.display = "none";
 }
 
 
-// BUTTON EVENTS
 
-doneButton.onclick = startGame;
-
-yesButton.onclick = yesAnswer;
-
-noButton.onclick = noAnswer;
-
-playAgainButton.onclick = resetGame;
+document.getElementById("startButton")
+.addEventListener("click", startGame);
