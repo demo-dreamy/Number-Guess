@@ -1,97 +1,100 @@
-body {
+body{
 
-    background-color: #111;
+    margin:0;
+    padding:0;
 
-    color: white;
+    background:#111;
 
-    font-family: Arial;
+    color:white;
 
-    display: flex;
+    font-family:Arial;
 
-    justify-content: center;
+    display:flex;
 
-    align-items: center;
+    justify-content:center;
 
-    height: 100vh;
+    align-items:center;
 
-    margin: 0;
+    height:100vh;
 }
 
-.container {
+.container{
 
-    text-align: center;
+    width:600px;
+
+    text-align:center;
+
+    background:#1e1e1e;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 0 20px rgba(255,255,255,0.1);
 }
 
-h1 {
+h1{
 
-    font-size: 50px;
+    font-size:32px;
 
-    margin-bottom: 30px;
+    margin-bottom:40px;
 }
 
-#question {
+button{
 
-    font-size: 28px;
+    padding:12px 30px;
 
-    margin-bottom: 30px;
+    margin:10px;
+
+    font-size:18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:0.2s;
 }
 
-button {
+button:hover{
 
-    font-size: 20px;
-
-    padding: 12px 24px;
-
-    margin: 10px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    cursor: pointer;
+    transform:scale(1.05);
 }
 
-#yesButton {
+.start{
 
-    background-color: #28a745;
+    background:#3498db;
 
-    color: white;
+    color:white;
 }
 
-#noButton {
+.yes{
 
-    background-color: #dc3545;
+    background:#2ecc71;
 
-    color: white;
+    color:white;
 }
 
-#doneButton {
+.no{
 
-    background-color: #007bff;
+    background:#e74c3c;
 
-    color: white;
+    color:white;
 }
 
-#playAgainButton {
+.playagain{
 
-    background-color: orange;
+    background:#f39c12;
 
-    color: white;
-
-    display: none;
+    color:white;
 }
 
-#yesButton,
-#noButton {
+.madeby{
 
-    display: none;
-}
+    margin-top:30px;
 
-#madeBy {
+    font-size:14px;
 
-    margin-top: 30px;
-
-    color: gray;
-
-    display: none;
+    opacity:0.6;
 }
