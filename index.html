@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Number Guess</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Number Guess </title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -14,31 +18,38 @@
 
     <div class="container">
 
-        <h1>Number Guess</h1>
+        <h1 id="question">
+            Think of a number between 1 and 1000
+        </h1>
 
-        <p id="question">
-            Think of a number between 1 and 100
-        </p>
-
-        <button id="doneButton">
+        <button id="startButton" class="start">
             Done
         </button>
 
-        <button id="yesButton">
-            Yes
-        </button>
+        <div id="gameButtons" style="display:none;">
 
-        <button id="noButton">
-            No
-        </button>
+            <button class="yes" onclick="yesAnswer()">
+                Yes
+            </button>
 
-        <button id="playAgainButton">
+            <button class="no" onclick="noAnswer()">
+                No
+            </button>
+
+        </div>
+
+        <button id="playAgainButton"
+        class="playagain"
+        style="display:none;"
+        onclick="resetGame()">
+
             Play Again
+
         </button>
 
-        <p id="madeBy">
+        <div class="madeby">
             Made by dot
-        </p>
+        </div>
 
     </div>
 
